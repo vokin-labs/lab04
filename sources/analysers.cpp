@@ -1,3 +1,5 @@
+// Copyright 2021 vokin-labs <vokinsilok2305@mail.ru>
+
 #include <analysers.h>
 #include <broker.h>
 
@@ -6,6 +8,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
+using d_path = boost::filesystem::path;
+using d_iter = boost::filesystem::directory_iterator;
+using d_entry = boost::filesystem::directory_entry;
 
 inline bool is_separator(char c) { return c == '_'; }
 
@@ -25,20 +31,23 @@ std::vector<std::string> split_string(const std::string &text) {
 void processing_filename(const std::string &filename,
                          std::vector<financial_file> &files,
                          std::set<std::string> &accounts) {
+  const std::string type = "balance";
+  const std::size_t account_length = 8;
+  const std::size_t date_length = 8;
+
+  enum { balance, account, date };
+
   std::vector<std::string> filename_tokens = split_string(filename);
 
   if (filename_tokens.size() != 3) return;
 
-  std::string type = filename_tokens[0];
-  std::string account = filename_tokens[1];
-  std::string date = filename_tokens[2];
+  if (filename_tokens[balance] != type) return;
+  if (filename_tokens[account].length() != account_length) return;
+  if (filename_tokens[date].length() != date_length) return;
 
-  if (type != "balance") return;
-  if (account.length() != 8) return;
-  if (date.length() != 8) return;
-
-  files.push_back(financial_file(filename, date, account));
-  accounts.insert(account);
+  files.push_back(financial_file(filename, filename_tokens[date],
+                                 filename_tokens[account]));
+  accounts.insert(filename_tokens[account]);
 }
 
 broker analyse_one(const std::string &path) {

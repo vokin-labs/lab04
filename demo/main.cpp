@@ -1,3 +1,5 @@
+// Copyright 2021 vokin-labs <vokinsilok2305@mail.ru>
+
 #include <analysers.h>
 #include <broker.h>
 #include <file.h>

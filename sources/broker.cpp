@@ -1,3 +1,5 @@
+// Copyright 2021 vokin-labs <vokinsilok2305@mail.ru>
+
 #include <broker.h>
 
 broker::broker(const std::string& name,
@@ -7,11 +9,5 @@ broker::broker(const std::string& name,
 
 std::string broker::name() const { return _name; }
 
-std::vector<financial_file> broker::files() const {
-  return _files;
-}
-std::set<std::string> broker::accounts() const {
-  return _accounts;
-}//
-// Created by vok1n on 17.01.2021.
-//
+std::vector<financial_file> broker::files() const { return _files; }
+std::set<std::string> broker::accounts() const { return _accounts; }

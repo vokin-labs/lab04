@@ -32,7 +32,6 @@ hunter_add_package(Boost COMPONENTS filesystem)
 find_package(Boost CONFIG REQUIRED filesystem)
 
 add_library(${PROJECT_NAME} STATIC
-        # enum your files and delete this comment
         ${CMAKE_CURRENT_SOURCE_DIR}/include/file.h
         ${CMAKE_CURRENT_SOURCE_DIR}/include/broker.h
         ${CMAKE_CURRENT_SOURCE_DIR}/include/analysers.h

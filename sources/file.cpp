@@ -1,3 +1,5 @@
+// Copyright 2021 vokin-labs <vokinsilok2305@mail.ru>
+
 #include <file.h>
 
 financial_file::financial_file(const std::string& name, const std::string& date,
@@ -8,6 +10,4 @@ std::string financial_file::name() const { return _name + ".txt"; }
 
 std::string financial_file::date() const { return _date; }
 
-std::string financial_file::account() const { return _account; }//
-// Created by vok1n on 17.01.2021.
-//
+std::string financial_file::account() const { return _account; }
