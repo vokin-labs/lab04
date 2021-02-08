@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <boost/filesystem.hpp>
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -72,4 +73,34 @@ std::vector<broker> analyse_all(const std::string &path) {
       result.push_back(brok);
   }
   return result;
+}
+
+std::string lastdate(const std::vector<financial_file> &files) {
+  std::string res;
+  for (const auto &file : files) {
+    res = std::max(res, file.date());
+  }
+  return res;
+}
+
+void print_brokers_files(const std::vector<broker> &brokers) {
+  for (auto const &broker : brokers) {
+    for (auto const &broker_file : broker.files()) {
+      std::cout << broker.name() << " " << broker_file.name() << std::endl;
+    }
+  }
+}
+
+void print_brokers_info(const std::vector<broker> &brokers) {
+  for (auto const &broker : brokers) {
+    for (auto const &account : broker.accounts()) {
+      std::vector<financial_file> this_account_files;
+      for (auto const &file : broker.files()) {
+        if (file.account() == account) this_account_files.push_back(file);
+      }
+      std::cout << "broker:" << broker.name() << " account:" << account
+                << " files:" << this_account_files.size()
+                << " lastdate:" << lastdate(this_account_files) << std::endl;
+    }
+  }
 }
